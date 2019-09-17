@@ -97,48 +97,45 @@
             // 
             // HouseHolder
             // 
-            this.HouseHolder.Location = new System.Drawing.Point(12, 91);
+            this.HouseHolder.Location = new System.Drawing.Point(12, 145);
             this.HouseHolder.Name = "HouseHolder";
-            this.HouseHolder.Size = new System.Drawing.Size(135, 50);
-            this.HouseHolder.TabIndex = 6;
-            this.HouseHolder.Text = "Хаусхолдер";
-            this.HouseHolder.UseVisualStyleBackColor = true;
+            this.HouseHolder.Size = new System.Drawing.Size(150, 60);
+            this.HouseHolder.TabIndex = 14;
+            this.HouseHolder.Text = "Метод Хаусхолдера";
             this.HouseHolder.Click += new System.EventHandler(this.HouseHolder_Click);
             // 
             // MirrorBlock
             // 
-            this.MirrorBlock.Location = new System.Drawing.Point(195, 91);
+            this.MirrorBlock.Location = new System.Drawing.Point(180, 145);
             this.MirrorBlock.Name = "MirrorBlock";
-            this.MirrorBlock.Size = new System.Drawing.Size(135, 50);
-            this.MirrorBlock.TabIndex = 7;
-            this.MirrorBlock.Text = "Блочные отражения";
-            this.MirrorBlock.UseVisualStyleBackColor = true;
+            this.MirrorBlock.Size = new System.Drawing.Size(150, 60);
+            this.MirrorBlock.TabIndex = 13;
+            this.MirrorBlock.Text = "Метод блочных отражений";
             this.MirrorBlock.Click += new System.EventHandler(this.MirrorBlock_Click);
             // 
             // Rotation
             // 
-            this.Rotation.Location = new System.Drawing.Point(12, 147);
+            this.Rotation.Location = new System.Drawing.Point(180, 79);
             this.Rotation.Name = "Rotation";
-            this.Rotation.Size = new System.Drawing.Size(135, 50);
-            this.Rotation.TabIndex = 8;
-            this.Rotation.Text = "Вращения";
-            this.Rotation.UseVisualStyleBackColor = true;
+            this.Rotation.Size = new System.Drawing.Size(150, 60);
+            this.Rotation.TabIndex = 12;
+            this.Rotation.Text = "Метод Гивенса";
             this.Rotation.Click += new System.EventHandler(this.Rotation_Click);
             // 
             // QuickRotation
             // 
-            this.QuickRotation.Location = new System.Drawing.Point(195, 147);
+            this.QuickRotation.Location = new System.Drawing.Point(12, 79);
             this.QuickRotation.Name = "QuickRotation";
-            this.QuickRotation.Size = new System.Drawing.Size(135, 50);
+            this.QuickRotation.Size = new System.Drawing.Size(150, 60);
             this.QuickRotation.TabIndex = 11;
-            this.QuickRotation.Text = "Быстрые вращения";
+            this.QuickRotation.Text = "Метод быстрых вращений";
             this.QuickRotation.Click += new System.EventHandler(this.QuickRotation_Click);
             // 
             // OpenOut
             // 
-            this.OpenOut.Location = new System.Drawing.Point(109, 203);
+            this.OpenOut.Location = new System.Drawing.Point(12, 211);
             this.OpenOut.Name = "OpenOut";
-            this.OpenOut.Size = new System.Drawing.Size(135, 50);
+            this.OpenOut.Size = new System.Drawing.Size(318, 50);
             this.OpenOut.TabIndex = 10;
             this.OpenOut.Text = "Открыть выходной файл";
             this.OpenOut.UseVisualStyleBackColor = true;
