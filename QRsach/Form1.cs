@@ -13,9 +13,12 @@ namespace QRsach
 {
     public partial class Form1 : Form
     {
-        string path_in = "..\\..\\input.txt";   //Хранилище Матрицы А
-        string path_out = "..\\..\\output.txt"; //Хранилище матриц Q,R
-
+        double[,] MatriX;
+        int Row = 0;
+        int Column =0;
+        //string applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
+        string path_in = "Matrix.txt";   //Хранилище Матрицы А
+        string path_out = "C\\output.txt"; //Хранилище матриц Q,R
         public Form1()
         {
             InitializeComponent();
@@ -32,48 +35,82 @@ namespace QRsach
             { e.Handled = true; }
         }
         //Открытие файлов
-        private void OpenFile_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start(path_in); }
-        private void OpenOut_Click(object sender, EventArgs e) { System.Diagnostics.Process.Start(path_out); }
-        // Создать матрицу и вывести ее в файл input
-        private void CreateMatr_Click(object sender, EventArgs e)
+        private void OpenFile_Click(object sender, EventArgs e)
         {
             try
             {
-                double rows, cols, i, j; // кол-во строк, столбцов, счетчики
-                rows = Convert.ToDouble(textBox1.Text);
-                cols = Convert.ToDouble(textBox2.Text);
-                if (rows > 2000 || cols > 2000) { throw new FormatException(); }
-                for (i = 0; i < rows; i++)
+                ReadQR qr = new ReadQR();
+                MatriX = qr.Readr(path_in);
+                Row = MatriX.GetUpperBound(0) + 1;
+                Column = MatriX.Length / Row;
+                string info = "";
+                for (int a = 0; a < Row; a++)
                 {
-                    for (j = 0; j < cols; i++)
-                    {
-                        //Заполнить матрицу случайными значениями от -1000 до 1000
-                    }
+                    for (int b = 0; b < Column; b++)
+                    { info += MatriX[a, b] + "   "; }
+                    info += "\r\n";
+                }
+                MessageBox.Show(info, "Исходная матрица А");               
+            }
+            catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл.", "Ошибка"); }
+            catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
+            catch (FormatException exc) { MessageBox.Show(exc.Message, "Ошибка"); };            
+        }
+        // Создать матрицу и вывести ее в файл input
+        private void CreateMatr_Click(object sender, EventArgs e)
+        {           
+            try
+            {            
+                int rows, cols; // кол-во строк, столбцов, счетчики
+                rows = Convert.ToInt32(textBox1.Text);
+                cols = Convert.ToInt32(textBox2.Text);
+                MatriX = new double[cols,rows];//[Colum,Row]
+                Random r = new Random();
+                if (rows > 100 || cols > 100) { throw new FormatException(); }
+                if (rows == 0 || cols == 0) { throw new Exception("Параметры не могут быть равны нулю."); }
+                for (int i = 0; i < cols; i++)
+                {
+                    for (int j = 0; j < rows; j++)
+                    { MatriX[i, j] = r.Next(-1000, 1000); }
                 }
                 //Отправить матрицу в файл input
-
+                WriteQR qr = new WriteQR();
+                qr.Writer(MatriX, path_in);
                 MessageBox.Show("Матрица отправлена в файл", "Уведомление");
-
             }
-            catch (FormatException) { MessageBox.Show("Размеры созданной матрицы не могут превышать 2000х2000 или быть неопределенными", "Ошибка"); }
-            catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
+           catch (FormatException) { MessageBox.Show("Размеры созданной матрицы не могут превышать 100х100 или быть неопределенными.", "Ошибка"); }
+           catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
 
         }
-        /*Для каждого метода произвести QR-разложение и вывести в файл output в формате 
-Q:
-Марица Q
-R:
-Матрица R
-*/
-
         private void QuickRotation_Click(object sender, EventArgs e)
         {
             try
             {
-
+                ReadQR r = new ReadQR();
+                MatriX = r.Readr(path_in);
+                Row = MatriX.GetUpperBound(0) + 1;
+                Column = MatriX.Length / Row;
+                QRdecomposition qr = new QRdecomposition();
+                qr.FastRotation(MatriX);
+                string sd = "Q" + "\r\n";
+                string sr = "R" + "\r\n";
+                string se = "QR" + "\r\n";
+                for (int t = 0; t < Row; t++)
+                {
+                    for (int i = 0; i < Column; i++)
+                    {
+                        sd += qr.Q[t, i].ToString("0.0000") + "   ";
+                        sr += qr.R[t, i].ToString("0.0000") + "   ";
+                        se += qr.QR[t, i].ToString("0.0000") + "   ";
+                    }
+                    sd += "\r\n";
+                    sr += "\r\n";
+                    se += "\r\n";
+                }
+                MessageBox.Show(sd + sr + se, "Метод быстрых вращений");
             }
-            catch (FileLoadException) { MessageBox.Show("Файл не найден", "Ошибка"); }
-            catch (ArgumentOutOfRangeException) { MessageBox.Show("Файл пуст", "Ошибка"); }
+            catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл.", "Ошибка"); }
+            catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
             catch (FormatException) { MessageBox.Show("Некорректные данные в файле", "Ошибка"); }
             catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
         }
@@ -82,10 +119,31 @@ R:
         {
             try
             {
-
+                ReadQR r = new ReadQR();
+                MatriX = r.Readr(path_in);
+                Row = MatriX.GetUpperBound(0) + 1;
+                Column = MatriX.Length / Row;
+                QRdecomposition qr = new QRdecomposition();
+                qr.Rotation(MatriX);
+                string sd = "Q" + "\r\n";
+                string sr = "R" + "\r\n";
+                string se = "QR" + "\r\n";
+                for (int t = 0; t < Row; t++)
+                {
+                    for (int i = 0; i < Column; i++)
+                    {
+                        sd += qr.Q[t, i].ToString("0.0000") + "   ";
+                        sr += qr.R[t, i].ToString("0.0000") + "   ";
+                        se += qr.QR[t, i].ToString("0.0000") + "   ";
+                    }
+                    sd += "\r\n";
+                    sr += "\r\n";
+                    se += "\r\n";
+                }
+                MessageBox.Show(sd + sr + se, "Метод Гивенса");
             }
-            catch (FileLoadException) { MessageBox.Show("Файл не найден", "Ошибка"); }
-            catch (ArgumentOutOfRangeException) { MessageBox.Show("Файл пуст", "Ошибка"); }
+            catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
+            catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
             catch (FormatException) { MessageBox.Show("Некорректные данные в файле", "Ошибка"); }
             catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
         }
@@ -94,10 +152,32 @@ R:
         {
             try
             {
-
+                ReadQR r = new ReadQR();
+                MatriX = r.Readr(path_in);
+                Row = MatriX.GetUpperBound(0) + 1;
+                Column = MatriX.Length / Row;
+                QRdecomposition qr = new QRdecomposition();
+                qr.Householder(MatriX);
+                string sd = "Q" + "\r\n";
+                string sr = "R" + "\r\n";
+                string se = "QR" + "\r\n";
+                for (int t = 0; t < Row; t++)
+                {
+                    for (int i = 0; i < Column; i++)
+                    {
+                        sd += qr.Q[t, i].ToString("0.0000") + "   ";
+                        sr += qr.R[t, i].ToString("0.0000") + "   ";
+                        se += qr.QR[t, i].ToString("0.0000") + "   ";
+                    }
+                    sd += "\r\n";
+                    sr += "\r\n";
+                    se += "\r\n";
+                }
+                
+                MessageBox.Show(sd + sr + se, "Метод Хаусхолдера");
             }
-            catch (FileLoadException) { MessageBox.Show("Файл не найден", "Ошибка"); }
-            catch (ArgumentOutOfRangeException) { MessageBox.Show("Файл пуст", "Ошибка"); }
+            catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
+            catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
             catch (FormatException) { MessageBox.Show("Некорректные данные в файле", "Ошибка"); }
             catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
         }
@@ -106,10 +186,31 @@ R:
         {
             try
             {
-
+                ReadQR r = new ReadQR();
+                MatriX = r.Readr(path_in);
+                Row = MatriX.GetUpperBound(0) + 1;
+                Column = MatriX.Length / Row;
+                QRdecomposition qr = new QRdecomposition();
+                qr.Reflections(MatriX);
+                string sd = "Q" + "\r\n";
+                string sr = "R" + "\r\n";
+                string se = "QR" + "\r\n";
+                for (int t = 0; t < Row; t++)
+                {
+                    for (int i = 0; i < Column; i++)
+                    {
+                        sd += qr.Q[t, i].ToString("0.0000") + "   ";
+                        sr += qr.R[t, i].ToString("0.0000") + "   ";
+                        se += qr.QR[t, i].ToString("0.0000") + "   ";
+                    }
+                    sd += "\r\n";
+                    sr += "\r\n";
+                    se += "\r\n";
+                }
+                MessageBox.Show(sd + sr + se, "Метод блочных отражений");
             }
-            catch (FileLoadException) { MessageBox.Show("Файл не найден", "Ошибка"); }
-            catch (ArgumentOutOfRangeException) { MessageBox.Show("Файл пуст", "Ошибка"); }
+            catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
+            catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
             catch (FormatException) { MessageBox.Show("Некорректные данные в файле", "Ошибка"); }
             catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
         }

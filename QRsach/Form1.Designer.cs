@@ -38,13 +38,12 @@
             this.MirrorBlock = new System.Windows.Forms.Button();
             this.Rotation = new System.Windows.Forms.Button();
             this.QuickRotation = new System.Windows.Forms.Button();
-            this.OpenOut = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 13);
+            this.label1.Location = new System.Drawing.Point(12, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 17);
             this.label1.TabIndex = 0;
@@ -52,17 +51,19 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(84, 13);
+            this.textBox1.Location = new System.Drawing.Point(84, 14);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(74, 22);
+            this.textBox1.Size = new System.Drawing.Size(73, 22);
             this.textBox1.TabIndex = 1;
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(84, 43);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(74, 22);
+            this.textBox2.Size = new System.Drawing.Size(73, 22);
             this.textBox2.TabIndex = 2;
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
@@ -77,9 +78,10 @@
             // 
             // CreateMatr
             // 
-            this.CreateMatr.Location = new System.Drawing.Point(164, 13);
+            this.CreateMatr.Location = new System.Drawing.Point(164, 14);
+            this.CreateMatr.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CreateMatr.Name = "CreateMatr";
-            this.CreateMatr.Size = new System.Drawing.Size(80, 52);
+            this.CreateMatr.Size = new System.Drawing.Size(126, 51);
             this.CreateMatr.TabIndex = 4;
             this.CreateMatr.Text = "Создать Матрицу";
             this.CreateMatr.UseVisualStyleBackColor = true;
@@ -87,9 +89,10 @@
             // 
             // OpenFile
             // 
-            this.OpenFile.Location = new System.Drawing.Point(250, 13);
+            this.OpenFile.Location = new System.Drawing.Point(15, 82);
+            this.OpenFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OpenFile.Name = "OpenFile";
-            this.OpenFile.Size = new System.Drawing.Size(80, 52);
+            this.OpenFile.Size = new System.Drawing.Size(275, 52);
             this.OpenFile.TabIndex = 5;
             this.OpenFile.Text = "Открыть Файл";
             this.OpenFile.UseVisualStyleBackColor = true;
@@ -97,56 +100,49 @@
             // 
             // HouseHolder
             // 
-            this.HouseHolder.Location = new System.Drawing.Point(12, 145);
+            this.HouseHolder.Location = new System.Drawing.Point(12, 202);
+            this.HouseHolder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.HouseHolder.Name = "HouseHolder";
-            this.HouseHolder.Size = new System.Drawing.Size(150, 60);
+            this.HouseHolder.Size = new System.Drawing.Size(115, 60);
             this.HouseHolder.TabIndex = 14;
             this.HouseHolder.Text = "Метод Хаусхолдера";
             this.HouseHolder.Click += new System.EventHandler(this.HouseHolder_Click);
             // 
             // MirrorBlock
             // 
-            this.MirrorBlock.Location = new System.Drawing.Point(180, 145);
+            this.MirrorBlock.Location = new System.Drawing.Point(133, 202);
+            this.MirrorBlock.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MirrorBlock.Name = "MirrorBlock";
-            this.MirrorBlock.Size = new System.Drawing.Size(150, 60);
+            this.MirrorBlock.Size = new System.Drawing.Size(157, 60);
             this.MirrorBlock.TabIndex = 13;
             this.MirrorBlock.Text = "Метод блочных отражений";
             this.MirrorBlock.Click += new System.EventHandler(this.MirrorBlock_Click);
             // 
             // Rotation
             // 
-            this.Rotation.Location = new System.Drawing.Point(180, 79);
+            this.Rotation.Location = new System.Drawing.Point(12, 138);
+            this.Rotation.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Rotation.Name = "Rotation";
-            this.Rotation.Size = new System.Drawing.Size(150, 60);
+            this.Rotation.Size = new System.Drawing.Size(115, 60);
             this.Rotation.TabIndex = 12;
             this.Rotation.Text = "Метод Гивенса";
             this.Rotation.Click += new System.EventHandler(this.Rotation_Click);
             // 
             // QuickRotation
             // 
-            this.QuickRotation.Location = new System.Drawing.Point(12, 79);
+            this.QuickRotation.Location = new System.Drawing.Point(133, 138);
+            this.QuickRotation.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.QuickRotation.Name = "QuickRotation";
-            this.QuickRotation.Size = new System.Drawing.Size(150, 60);
+            this.QuickRotation.Size = new System.Drawing.Size(157, 60);
             this.QuickRotation.TabIndex = 11;
             this.QuickRotation.Text = "Метод быстрых вращений";
             this.QuickRotation.Click += new System.EventHandler(this.QuickRotation_Click);
-            // 
-            // OpenOut
-            // 
-            this.OpenOut.Location = new System.Drawing.Point(12, 211);
-            this.OpenOut.Name = "OpenOut";
-            this.OpenOut.Size = new System.Drawing.Size(318, 50);
-            this.OpenOut.TabIndex = 10;
-            this.OpenOut.Text = "Открыть выходной файл";
-            this.OpenOut.UseVisualStyleBackColor = true;
-            this.OpenOut.Click += new System.EventHandler(this.OpenOut_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 273);
-            this.Controls.Add(this.OpenOut);
+            this.ClientSize = new System.Drawing.Size(302, 273);
             this.Controls.Add(this.QuickRotation);
             this.Controls.Add(this.Rotation);
             this.Controls.Add(this.MirrorBlock);
@@ -157,8 +153,9 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
-            this.Text = "QR";
+            this.Text = "QRsach";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -176,7 +173,6 @@
         private System.Windows.Forms.Button MirrorBlock;
         private System.Windows.Forms.Button Rotation;
         private System.Windows.Forms.Button QuickRotation;
-        private System.Windows.Forms.Button OpenOut;
     }
 }
 
