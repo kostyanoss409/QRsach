@@ -16,7 +16,6 @@ namespace QRsach
         double[,] MatriX;
         int Row = 0;
         int Column =0;
-        //string applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
         string path_in = "Matrix.txt";   //Хранилище Матрицы А
         string path_out = "C\\output.txt"; //Хранилище матриц Q,R
         public Form1()
