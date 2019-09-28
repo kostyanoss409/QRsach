@@ -13,7 +13,8 @@ namespace QRsach
 {
     public partial class Form1 : Form
     {
-        double[,] MatriX;
+        double[,] MatriX, vl, vr;
+        double[] wr, wi;
         int Row = 0;
         int Column =0;
         string path_in = "Matrix.txt";   //Хранилище Матрицы А
@@ -32,6 +33,12 @@ namespace QRsach
         {
             if (!((e.KeyChar >= '0') && (e.KeyChar <= '9') || (e.KeyChar == (char)8)))
             { e.Handled = true; }
+        }
+        public char sigint(double val)
+        {
+            char sign = ' ';
+            if (val >= 0) { sign = '+'; }
+            return sign;
         }
         //Открытие файлов
         private void OpenFile_Click(object sender, EventArgs e)
@@ -79,7 +86,7 @@ namespace QRsach
             }
            catch (FormatException) { MessageBox.Show("Размеры созданной матрицы не могут превышать 100х100 или быть неопределенными.", "Ошибка"); }
            catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
-
+           
         }
         private void QuickRotation_Click(object sender, EventArgs e)
         {
@@ -91,9 +98,14 @@ namespace QRsach
                 Column = MatriX.Length / Row;
                 QRdecomposition qr = new QRdecomposition();
                 qr.FastRotation(MatriX);
+                if (Row == Column)
+                {
+                   alglib.rmatrixevd(MatriX, Row, 0, out wr, out wi, out vl, out vr);
+                }
                 string sd = "Q" + "\r\n";
                 string sr = "R" + "\r\n";
                 string se = "QR" + "\r\n";
+                string ss = "Собственные числа" + "\r\n";
                 for (int t = 0; t < Row; t++)
                 {
                     for (int i = 0; i < Column; i++)
@@ -101,12 +113,18 @@ namespace QRsach
                         sd += qr.Q[t, i].ToString("0.0000") + "   ";
                         sr += qr.R[t, i].ToString("0.0000") + "   ";
                         se += qr.QR[t, i].ToString("0.0000") + "   ";
-                    }
+                        if ((Row == Column) && (t == i))
+                        {
+                            ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i";
+                        }
+                    }                    
                     sd += "\r\n";
                     sr += "\r\n";
                     se += "\r\n";
+                    if (Row == Column) { ss += "\r\n"; }
                 }
-                MessageBox.Show(sd + sr + se, "Метод быстрых вращений");
+                if (Row != Column) { ss += "Не существуют для данной матрицы"; }
+                MessageBox.Show(sd + sr + se + ss, "Метод быстрых вращений");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл.", "Ошибка"); }
             catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
@@ -124,9 +142,14 @@ namespace QRsach
                 Column = MatriX.Length / Row;
                 QRdecomposition qr = new QRdecomposition();
                 qr.Rotation(MatriX);
+                if (Row == Column)
+                {
+                    alglib.rmatrixevd(MatriX, Row, 0, out wr, out wi, out vl, out vr);
+                }
                 string sd = "Q" + "\r\n";
                 string sr = "R" + "\r\n";
                 string se = "QR" + "\r\n";
+                string ss = "Собственные числа" + "\r\n";
                 for (int t = 0; t < Row; t++)
                 {
                     for (int i = 0; i < Column; i++)
@@ -134,12 +157,16 @@ namespace QRsach
                         sd += qr.Q[t, i].ToString("0.0000") + "   ";
                         sr += qr.R[t, i].ToString("0.0000") + "   ";
                         se += qr.QR[t, i].ToString("0.0000") + "   ";
+                        if ((Row == Column) && (t == i)) { ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i"; }
+                        else { ss += "Не существуют"; }
                     }
                     sd += "\r\n";
                     sr += "\r\n";
                     se += "\r\n";
+                    if (Row == Column) { ss += "\r\n"; }
                 }
-                MessageBox.Show(sd + sr + se, "Метод Гивенса");
+                if (Row != Column) { ss += "Не существуют для данной матрицы"; }
+                MessageBox.Show(sd + sr + se +ss, "Метод Гивенса");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
             catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
@@ -157,9 +184,14 @@ namespace QRsach
                 Column = MatriX.Length / Row;
                 QRdecomposition qr = new QRdecomposition();
                 qr.Householder(MatriX);
+                if (Row == Column)
+                {
+                    alglib.rmatrixevd(MatriX, Row, 0, out wr, out wi, out vl, out vr);
+                }
                 string sd = "Q" + "\r\n";
                 string sr = "R" + "\r\n";
                 string se = "QR" + "\r\n";
+                string ss = "Собственные числа" + "\r\n";
                 for (int t = 0; t < Row; t++)
                 {
                     for (int i = 0; i < Column; i++)
@@ -167,13 +199,15 @@ namespace QRsach
                         sd += qr.Q[t, i].ToString("0.0000") + "   ";
                         sr += qr.R[t, i].ToString("0.0000") + "   ";
                         se += qr.QR[t, i].ToString("0.0000") + "   ";
+                        if ((Row == Column) && (t == i)) { ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i"; }
                     }
                     sd += "\r\n";
                     sr += "\r\n";
                     se += "\r\n";
+                    if (Row == Column) { ss += "\r\n"; }
                 }
-                
-                MessageBox.Show(sd + sr + se, "Метод Хаусхолдера");
+                if (Row != Column) { ss += "Не существуют для данной матрицы"; }
+                MessageBox.Show(sd + sr + se + ss, "Метод Хаусхолдера");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
             catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
@@ -191,9 +225,14 @@ namespace QRsach
                 Column = MatriX.Length / Row;
                 QRdecomposition qr = new QRdecomposition();
                 qr.Reflections(MatriX);
+                if (Row == Column)
+                {
+                    alglib.rmatrixevd(MatriX, Row, 0, out wr, out wi, out vl, out vr);
+                }
                 string sd = "Q" + "\r\n";
                 string sr = "R" + "\r\n";
                 string se = "QR" + "\r\n";
+                string ss = "Собственные числа" + "\r\n";
                 for (int t = 0; t < Row; t++)
                 {
                     for (int i = 0; i < Column; i++)
@@ -201,12 +240,15 @@ namespace QRsach
                         sd += qr.Q[t, i].ToString("0.0000") + "   ";
                         sr += qr.R[t, i].ToString("0.0000") + "   ";
                         se += qr.QR[t, i].ToString("0.0000") + "   ";
+                        if ((Row == Column)&&(t==i)) { ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000")+"i"; }
                     }
                     sd += "\r\n";
                     sr += "\r\n";
                     se += "\r\n";
+                    if (Row == Column) { ss += "\r\n"; }
                 }
-                MessageBox.Show(sd + sr + se, "Метод блочных отражений");
+                if (Row != Column) { ss += "Не существуют для данной матрицы"; }
+                MessageBox.Show(sd + sr + se + ss, "Метод блочных отражений");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
             catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }

@@ -28,3 +28,5 @@ D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.csproj.CoreCompileInputs.cache
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.exe
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.pdb
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.csprojAssemblyReference.cache
+D:\source\VychMat\QRsach\QRsach\bin\Debug\alglibnet2.dll
+D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.csproj.CopyComplete
