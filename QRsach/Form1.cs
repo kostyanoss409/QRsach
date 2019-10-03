@@ -70,7 +70,7 @@ namespace QRsach
                 int rows, cols; // кол-во строк, столбцов, счетчики
                 rows = Convert.ToInt32(textBox1.Text);
                 cols = Convert.ToInt32(textBox2.Text);
-                MatriX = new double[cols,rows];//[Colum,Row]
+                MatriX = new double[cols,rows];
                 Random r = new Random();
                 if (rows > 100 || cols > 100) { throw new FormatException(); }
                 if (rows == 0 || cols == 0) { throw new Exception("Параметры не могут быть равны нулю."); }
@@ -127,7 +127,7 @@ namespace QRsach
                 MessageBox.Show(sd + sr + se + ss, "Метод быстрых вращений");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл.", "Ошибка"); }
-            catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
+            catch (EndOfStreamException) { MessageBox.Show("Входной файл пуст", "Ошибка"); }
             catch (FormatException) { MessageBox.Show("Некорректные данные в файле", "Ошибка"); }
             catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
         }
@@ -158,7 +158,6 @@ namespace QRsach
                         sr += qr.R[t, i].ToString("0.0000") + "   ";
                         se += qr.QR[t, i].ToString("0.0000") + "   ";
                         if ((Row == Column) && (t == i)) { ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i"; }
-                        else { ss += "Не существуют"; }
                     }
                     sd += "\r\n";
                     sr += "\r\n";
@@ -169,7 +168,7 @@ namespace QRsach
                 MessageBox.Show(sd + sr + se +ss, "Метод Гивенса");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
-            catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
+            catch (EndOfStreamException) { MessageBox.Show("Входной файл пуст", "Ошибка"); }
             catch (FormatException) { MessageBox.Show("Некорректные данные в файле", "Ошибка"); }
             catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
         }
@@ -210,7 +209,7 @@ namespace QRsach
                 MessageBox.Show(sd + sr + se + ss, "Метод Хаусхолдера");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
-            catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
+            catch (EndOfStreamException) { MessageBox.Show("Входной файл пуст", "Ошибка"); }
             catch (FormatException) { MessageBox.Show("Некорректные данные в файле", "Ошибка"); }
             catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
         }
@@ -220,7 +219,7 @@ namespace QRsach
             try
             {
                 ReadQR r = new ReadQR();
-                MatriX = r.Readr(path_in);
+                //MatriX = r.Readr(path_in);
                 Row = MatriX.GetUpperBound(0) + 1;
                 Column = MatriX.Length / Row;
                 QRdecomposition qr = new QRdecomposition();
@@ -251,7 +250,7 @@ namespace QRsach
                 MessageBox.Show(sd + sr + se + ss, "Метод блочных отражений");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
-            catch (EndOfStreamException) { MessageBox.Show("Файл пуст", "Ошибка"); }
+            catch (EndOfStreamException) { MessageBox.Show("Входной файл пуст", "Ошибка"); }
             catch (FormatException) { MessageBox.Show("Некорректные данные в файле", "Ошибка"); }
             catch (Exception exc) { MessageBox.Show(exc.Message, "Ошибка"); }
         }
