@@ -18,7 +18,6 @@ namespace QRsach
         int Row = 0;
         int Column =0;
         string path_in = "Matrix.txt";   //Хранилище Матрицы А
-        string path_out = "C\\output.txt"; //Хранилище матриц Q,R
         public Form1()
         {
             InitializeComponent();
@@ -100,12 +99,14 @@ namespace QRsach
                 qr.FastRotation(MatriX);
                 if (Row == Column)
                 {
-                   alglib.rmatrixevd(MatriX, Row, 0, out wr, out wi, out vl, out vr);
+                   alglib.rmatrixevd(MatriX, Row, 3, out wr, out wi, out vl, out vr);
+                   qr.Norm_Vecs(vr);
                 }
                 string sd = "Q" + "\r\n";
                 string sr = "R" + "\r\n";
                 string se = "QR" + "\r\n";
                 string ss = "Собственные числа" + "\r\n";
+                string sv = "Собственные векторы нормализованные" + "\r\n";
                 for (int t = 0; t < Row; t++)
                 {
                     for (int i = 0; i < Column; i++)
@@ -113,18 +114,22 @@ namespace QRsach
                         sd += qr.Q[t, i].ToString("0.0000") + "   ";
                         sr += qr.R[t, i].ToString("0.0000") + "   ";
                         se += qr.QR[t, i].ToString("0.0000") + "   ";
-                        if ((Row == Column) && (t == i))
+                        if ((Row == Column))
                         {
-                            ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i";
+                            if (t == i)
+                            {
+                                ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i";
+                            }
+                            sv += qr.nvecs[t, i].ToString("0.0000") + "  ";
                         }
                     }                    
                     sd += "\r\n";
                     sr += "\r\n";
                     se += "\r\n";
-                    if (Row == Column) { ss += "\r\n"; }
+                    if (Row == Column) { ss += "\r\n"; sv += "\r\n"; }
                 }
                 if (Row != Column) { ss += "Не существуют для данной матрицы"; }
-                MessageBox.Show(sd + sr + se + ss, "Метод быстрых вращений");
+                MessageBox.Show(sd + sr + se + ss + sv, "Метод быстрых вращений");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл.", "Ошибка"); }
             catch (EndOfStreamException) { MessageBox.Show("Входной файл пуст", "Ошибка"); }
@@ -144,12 +149,14 @@ namespace QRsach
                 qr.Rotation(MatriX);
                 if (Row == Column)
                 {
-                    alglib.rmatrixevd(MatriX, Row, 0, out wr, out wi, out vl, out vr);
+                    alglib.rmatrixevd(MatriX, Row, 3, out wr, out wi, out vl, out vr);
+                    qr.Norm_Vecs(vr);
                 }
                 string sd = "Q" + "\r\n";
                 string sr = "R" + "\r\n";
                 string se = "QR" + "\r\n";
                 string ss = "Собственные числа" + "\r\n";
+                string sv = "Собственные векторы нормализованные" + "\r\n";
                 for (int t = 0; t < Row; t++)
                 {
                     for (int i = 0; i < Column; i++)
@@ -157,15 +164,22 @@ namespace QRsach
                         sd += qr.Q[t, i].ToString("0.0000") + "   ";
                         sr += qr.R[t, i].ToString("0.0000") + "   ";
                         se += qr.QR[t, i].ToString("0.0000") + "   ";
-                        if ((Row == Column) && (t == i)) { ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i"; }
+                        if ((Row == Column))
+                        {
+                            if (t == i)
+                            {
+                                ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i";
+                            }
+                            sv += qr.nvecs[t, i].ToString("0.0000") + "  ";
+                        }
                     }
                     sd += "\r\n";
                     sr += "\r\n";
                     se += "\r\n";
-                    if (Row == Column) { ss += "\r\n"; }
+                    if (Row == Column) { ss += "\r\n"; sv += "\r\n"; }
                 }
                 if (Row != Column) { ss += "Не существуют для данной матрицы"; }
-                MessageBox.Show(sd + sr + se +ss, "Метод Гивенса");
+                MessageBox.Show(sd + sr + se + ss + sv, "Метод Гивенса");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
             catch (EndOfStreamException) { MessageBox.Show("Входной файл пуст", "Ошибка"); }
@@ -185,12 +199,14 @@ namespace QRsach
                 qr.Householder(MatriX);
                 if (Row == Column)
                 {
-                    alglib.rmatrixevd(MatriX, Row, 0, out wr, out wi, out vl, out vr);
+                    alglib.rmatrixevd(MatriX, Row, 3, out wr, out wi, out vl, out vr);
+                    qr.Norm_Vecs(vr);
                 }
                 string sd = "Q" + "\r\n";
                 string sr = "R" + "\r\n";
                 string se = "QR" + "\r\n";
                 string ss = "Собственные числа" + "\r\n";
+                string sv = "Собственные векторы нормализованные" + "\r\n";
                 for (int t = 0; t < Row; t++)
                 {
                     for (int i = 0; i < Column; i++)
@@ -198,15 +214,22 @@ namespace QRsach
                         sd += qr.Q[t, i].ToString("0.0000") + "   ";
                         sr += qr.R[t, i].ToString("0.0000") + "   ";
                         se += qr.QR[t, i].ToString("0.0000") + "   ";
-                        if ((Row == Column) && (t == i)) { ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i"; }
+                        if ((Row == Column))
+                        {
+                            if (t == i)
+                            {
+                                ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i";
+                            }
+                            sv += qr.nvecs[t, i].ToString("0.0000") + "  ";
+                        }
                     }
                     sd += "\r\n";
                     sr += "\r\n";
                     se += "\r\n";
-                    if (Row == Column) { ss += "\r\n"; }
+                    if (Row == Column) { ss += "\r\n"; sv += "\r\n"; }
                 }
                 if (Row != Column) { ss += "Не существуют для данной матрицы"; }
-                MessageBox.Show(sd + sr + se + ss, "Метод Хаусхолдера");
+                MessageBox.Show(sd + sr + se + ss + sv, "Метод Хаусхолдера");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
             catch (EndOfStreamException) { MessageBox.Show("Входной файл пуст", "Ошибка"); }
@@ -219,19 +242,21 @@ namespace QRsach
             try
             {
                 ReadQR r = new ReadQR();
-                //MatriX = r.Readr(path_in);
+                MatriX = r.Readr(path_in);
                 Row = MatriX.GetUpperBound(0) + 1;
                 Column = MatriX.Length / Row;
                 QRdecomposition qr = new QRdecomposition();
                 qr.Reflections(MatriX);
                 if (Row == Column)
                 {
-                    alglib.rmatrixevd(MatriX, Row, 0, out wr, out wi, out vl, out vr);
+                    alglib.rmatrixevd(MatriX, Row, 3, out wr, out wi, out vl, out vr);
+                    qr.Norm_Vecs(vr);
                 }
                 string sd = "Q" + "\r\n";
                 string sr = "R" + "\r\n";
                 string se = "QR" + "\r\n";
                 string ss = "Собственные числа" + "\r\n";
+                string sv = "Собственные векторы нормализованные" + "\r\n";
                 for (int t = 0; t < Row; t++)
                 {
                     for (int i = 0; i < Column; i++)
@@ -239,15 +264,22 @@ namespace QRsach
                         sd += qr.Q[t, i].ToString("0.0000") + "   ";
                         sr += qr.R[t, i].ToString("0.0000") + "   ";
                         se += qr.QR[t, i].ToString("0.0000") + "   ";
-                        if ((Row == Column)&&(t==i)) { ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000")+"i"; }
+                        if ((Row == Column))
+                        {
+                            if (t==i)
+                            {
+                                ss += wr[i].ToString("0.0000") + " " + sigint(wi[i]) + " " + wi[i].ToString("0.0000") + "i";
+                            }                           
+                            sv += qr.nvecs[t, i].ToString("0.0000") + "  ";
+                        }
                     }
                     sd += "\r\n";
                     sr += "\r\n";
-                    se += "\r\n";
-                    if (Row == Column) { ss += "\r\n"; }
+                    se += "\r\n";                   
+                    if (Row == Column) { ss += "\r\n"; sv += "\r\n"; }
                 }
                 if (Row != Column) { ss += "Не существуют для данной матрицы"; }
-                MessageBox.Show(sd + sr + se + ss, "Метод блочных отражений");
+                MessageBox.Show(sd + sr + se + ss + sv, "Метод блочных отражений");
             }
             catch (FileNotFoundException) { MessageBox.Show("Не найден входной файл", "Ошибка"); }
             catch (EndOfStreamException) { MessageBox.Show("Входной файл пуст", "Ошибка"); }

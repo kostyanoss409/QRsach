@@ -21,12 +21,12 @@ D:\Downloads\QRsach\QRsach\obj\Debug\QRsach.pdb
 D:\source\VychMat\QRsach\QRsach\bin\Debug\QRsach.exe.config
 D:\source\VychMat\QRsach\QRsach\bin\Debug\QRsach.exe
 D:\source\VychMat\QRsach\QRsach\bin\Debug\QRsach.pdb
+D:\source\VychMat\QRsach\QRsach\bin\Debug\alglibnet2.dll
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.Form1.resources
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.Properties.Resources.resources
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.csproj.GenerateResource.cache
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.csproj.CoreCompileInputs.cache
+D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.csproj.CopyComplete
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.exe
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.pdb
 D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.csprojAssemblyReference.cache
-D:\source\VychMat\QRsach\QRsach\bin\Debug\alglibnet2.dll
-D:\source\VychMat\QRsach\QRsach\obj\Debug\QRsach.csproj.CopyComplete

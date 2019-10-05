@@ -8,17 +8,18 @@ namespace QRsach
 {
     class QRdecomposition
     {
-        public double[,] Q; // Нормированая матрица Q
-        public double[,] Qt;    // Нормированая матрица Qt
-        public double[,] R; // Нормированая матрица R
-        public double[,] QR;    // Нормированая матрица QR
-        public int Column;  // Нормированая матрица Q
-        public int Row; // Нормированая матрица Q
+        public double[,] Q; // Нормированная матрица Q
+        public double[,] Qt;    // Нормированная матрица Qt
+        public double[,] R; // Нормированная матрица R
+        public double[,] QR;    // Нормированная матрица QR
+        public int Column;  // Нормированная матрица Q
+        public int Row; // Нормированная матрица Q
+        public double[,] nvecs;
         double[] c;
         double[,] B;
         double[,] D;
 
-        public void Reflections(double[,] A)    // QR разложение  Хаусхолдера(Отражений)
+        public void Reflections(double[,] A)    // QR-разложение Хаусхолдера(Отражений)
         {
             Row = Replacement(A).GetUpperBound(0) + 1;
             Column = Replacement(A).Length / Row;
@@ -43,7 +44,7 @@ namespace QRsach
             QR = MultiMatrix(R, Qt);
         }
 
-        public void Householder(double[,] A)    // QR разложение  Хаусхолдера
+        public void Householder(double[,] A)    // QR-разложение Хаусхолдера
         {
             Row = Replacement(A).GetUpperBound(0) + 1;
             Column = Replacement(A).Length / Row;
@@ -68,7 +69,7 @@ namespace QRsach
             QR = MultiMatrix(R, Qt);
         }
 
-        public void Rotation(double[,] A)   // QR разложение методом вращения
+        public void Rotation(double[,] A)   // QR-разложение методом вращения
         {
             Row = Replacement(A).GetUpperBound(0) + 1;
             Column = Replacement(A).Length / Row;
@@ -93,7 +94,7 @@ namespace QRsach
             QR = MultiMatrix(R, Qt);
         }
 
-        public void FastRotation(double[,] A)   // QR разложение методом быстрого вращения
+        public void FastRotation(double[,] A)   // QR-разложение методом быстрого вращения
         {
             Row = Replacement(A).GetUpperBound(0) + 1;
             Column = Replacement(A).Length / Row;
@@ -217,7 +218,7 @@ namespace QRsach
             return MultiR;
         }
 
-        private double[] SearchMinMax(double[,] d)  // Поиск минимального и максимального зачения в массиве
+        private double[] SearchMinMax(double[,] d)  // Поиск минимального и максимального значений в массиве
         {
             double[] MinMax = new double[2];
             MinMax[0] = 0;
@@ -241,6 +242,24 @@ namespace QRsach
             for (int n = 0; n < Row; n++)
             { f += a[n, a1] * b[n, b1]; }
             return f;
+        }
+        public double[,] Norm_Vecs(double[,]A)
+        {
+            nvecs = new double[Row, Column];
+            double[] length = new double[Column];
+            for(int i = 0; i < Column; i++)
+            {
+                for (int j = 0; j < Row; j++)
+                {
+                    length[i] += A[j, i] * A[j, i];
+                }
+                length[i] = Math.Sqrt(length[i]);
+                for (int j = 0; j < Row; j++)
+                {
+                    nvecs[j,i] += A[j, i] / length[i];
+                }
+            }
+            return nvecs;
         }
     }
 }
